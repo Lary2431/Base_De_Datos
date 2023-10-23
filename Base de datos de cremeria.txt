@@ -1,0 +1,592 @@
+Create table Categoria(
+Clv_categoria mediumInt(20) primary key,
+Categoria varchar(100) not null);
+
+Create table Proveedor(
+Clv_proveedor varchar(50) primary key,
+Proveedor varchar(100) not null,
+Local varchar(10) not null,
+Telefono varchar(20) not null);
+
+
+CREATE TABLE Producto (
+  Clv_producto VARCHAR(50) PRIMARY KEY,
+  Nombre VARCHAR(100) NOT NULL,
+  Descripcion VARCHAR(200),
+  Precio DOUBLE NOT NULL,
+  Existencia DOUBLE NOT NULL,
+  Clv_categoria MEDIUMINT,
+  Clv_proveedor VARCHAR(50),
+  FOREIGN KEY (Clv_categoria) REFERENCES Categoria(Clv_categoria),
+  FOREIGN KEY (Clv_proveedor) REFERENCES Proveedor(Clv_proveedor)
+);
+
+Create TABLE Cliente(
+ID_cliente VARCHAR(50) PRIMARY KEY,
+Nombre VARCHAR(100) NOT NULL,
+Apellido VARCHAR(100)NOT NULL);
+
+CREATE TABLE Venta(
+ID_venta VARCHAR(50) PRIMARY KEY,
+Total_Venta double not null,
+Fecha_Hora datetime not null,
+Caja varchar(5) not null,
+Cajero varchar(100) not null,
+FOREIGN KEY (ID_cliente) REFERENCES Cliente(ID_cliente));
+
+
+CREATE TABLE Venta (
+  ID_venta VARCHAR(50) PRIMARY KEY,
+  Total_Venta DOUBLE NOT NULL,
+  Fecha_Hora DATETIME NOT NULL,
+  Caja VARCHAR(5) NOT NULL,
+  Cajero VARCHAR(100) NOT NULL,
+  ID_cliente VARCHAR(50),
+  FOREIGN KEY (ID_cliente) REFERENCES Cliente(ID_cliente)
+);
+
+CREATE TABLE DETALLE_VENTA(
+ID_detalle MEDIUMINT PRIMATY KEY,
+Cantidad double not null,
+Precio_Venta double not null,
+Clv_producto VARCHAR(50) NOT NULL,
+ID_venta VARCHAR(50) NOT NULL,
+FOREIGN KEY (Clv_producto) REFERENCES Producto(Clv_producto),
+FOREIGN KEY (ID_venta REFERENCES Venta(ID_venta));
+
+CREATE TABLE DETALLE_VENTA (
+  ID_detalle MEDIUMINT PRIMARY KEY,
+  Cantidad DOUBLE NOT NULL,
+  Precio_Venta DOUBLE NOT NULL,
+  Clv_producto VARCHAR(50) NOT NULL,
+  ID_venta VARCHAR(50) NOT NULL,
+  FOREIGN KEY (Clv_producto) REFERENCES Producto(Clv_producto),
+  FOREIGN KEY (ID_venta) REFERENCES Venta(ID_venta)
+);
+
+***************************************************Ingresar datos****************************************************************************************
+Insert Categoria values(
+('12345'),
+('Lacteos'));
+Insert Categoria values(
+('223456'),
+('Semillas'));
+
+Insert Categoria values(
+('323456'),
+('Especias'));
+
+Insert Categoria values(
+('423456'),
+('Chiles'));
+
+Insert Categoria values(
+('523456'),
+('Dulces'));
+
+Insert Categoria values(
+('623456'),
+('Carnes Frias'));
+
+Insert Categoria values(
+('723456'),
+('Embutidos'));
+
+Insert Proveedor values(
+('1'),
+('Lariza Garcia'),
+('1'),
+('5539164520'));
+
+Insert Proveedor values(
+('2'),
+('Jennifer Almaraz'),
+('2'),
+('5522715015'));
+
+
+
+Insert Proveedor values(
+('3'),
+('Gustavo Barrera'),
+('3'),
+('5586321063'));
+
+
+Insert Proveedor values(
+('4'),
+('Cristel Martinez'),
+('4'),
+('5509541874'));
+
+
+Insert Proveedor values(
+('5'),
+('Ryan Monroy'),
+('5'),
+('5510293847'));
+
+
+Insert Proveedor values(
+('6'),
+('Michel Jimenez'),
+('6'),
+('5509671234'));
+
+Insert Proveedor values(
+('7'),
+('Olivia Castillo'),
+(''),
+('5511862017'));
+
+
+Insert Proveedor values(
+('8'),
+('Mariana Cruz'),
+('8'),
+('5511862017'));
+
+
+Insert Proveedor values(
+('9'),
+('Bibiana Castillo'),
+('9'),
+('5544707219'));
+
+
+Insert Proveedor values(
+('10'),
+('Greco Garcia'),
+('10'),
+('5509317649'));
+
+UPDATE Proovedor
+SET '' = 7,
+WHERE Clv_proveedor=7;
+
+UPDATE proveedor
+SET Proveedor = 'Lariza Garcia'
+WHERE Clv_proveedor = 1;
+SELECT * FROM proveedor
+ORDER BY Clv_proveedor ASC;
+
+UPDATE proveedor
+SET Local = '7'
+WHERE Proveedor = 'Olivia Castillo';
+SELECT * FROM proveedor
+ORDER BY CAST(Clv_proveedor AS UNSIGNED) ASC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*******************************************************************************************************************************************************
+
+
+CREATE TABLE COMPRA(
+ID_compra MEDIUMINT(20) PRIMARY KEY,
+Folio_Ticket varchar(20) not null,
+Fecha_Hora DATETIME NOT NULL,
+total DOUBLE NOT NULL,
+Clv_proveedor VARCHAR(50) NOT NULL,
+FOREIGN KEY (Clv_proveedor) REFERENCES Proveedor(Clv_proveedor));
+
+
+CREATE TABLE DETALLECOMPRA(
+ID_Detalle MEDIUMINT(20) PRIMARY KEY,
+Cantidad double not null,
+Precio_unitario double not null,
+ID_compra MEDIUMINT(20)  NOT NULL,
+FOREIGN KEY (Clv_producto) REFERENCES Producto(Clv_producto));
+
+CREATE TABLE DETALLECOMPRA (
+  ID_Detalle MEDIUMINT(20) PRIMARY KEY,
+  Cantidad DOUBLE NOT NULL,
+  Precio_unitario DOUBLE NOT NULL,
+  ID_compra MEDIUMINT(20) NOT NULL,
+  Clv_producto VARCHAR(50) NOT NULL,
+  FOREIGN KEY (ID_compra) REFERENCES COMPRA(ID_compra),
+  FOREIGN KEY (Clv_producto) REFERENCES Producto(Clv_producto)
+
+);
+
+*************************************************************************INSERTAR PRODUCTO*******************************************************************
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| Clv_producto  | varchar(50)  | NO   | PRI | NULL    |       |
+| Nombre        | varchar(100) | NO   |     | NULL    |       |
+| Descripcion   | varchar(200) | YES  |     | NULL    |       |
+| Precio        | double       | NO   |     | NULL    |       |
+| Existencia    | double       | NO   |     | NULL    |       |
+| Clv_categoria | mediumint(9) | YES  | MUL | NULL    |       |
+| Clv_proveedor | varchar(50)  | YES  | MUL | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+
+Insert Proveedor values(
+('6'),
+('Michel Jimenez'),
+('6'),
+('5509671234'));
+
+
+Insert Producto values(
+('1927'),
+('Chile guajillo'),
+('Chile tipo guajilllo deshidratado, presentacion de 1kg'),
+('160'),
+('10'),
+(select clv_categoria from Categoria where categoria='Chiles' limit 1),
+(select clv_proveedor from Proveedor where proveedor='Lariza Garcia' limit 1));
+
+Insert Producto values(
+('3498'),
+('Chile pasilla'),
+('Chile deshidratado tipo pasilla, presentacion de 1kg'),
+('180'),
+('8'),
+(select clv_categoria from Categoria where categoria = 'Chiles' limit 1),
+(select clv_proveedor from Proveedor where proveedor ='Gustavo Barrera' limit 1));
+
+Insert Producto values(
+('6531'),
+('Chile ancho'),
+('Chile deshidratado tipo ancho, presentacio  de 1kg'),
+('180'),
+('11'),
+(select clv_categoria from Categoria where categoria='Chiles' limit 1),
+(select clv_proveedor from Proveedor where proveedor = 'Michel Jimenez' limit 1));
+
+Insert Producto values(
+('7291'),
+('Chile de arbol'),
+('Chile deshidratado de arbol, presentacion de 1kg'),
+('160'),
+('12'),
+(select clv_categoria from Categoria where categoria ='Chiles' limit 1),
+(select clv_proveedor from Proveedor where proveedor = 'Cristel Martinez' limit 1));
+
+Insert Producto values(
+('5682'),
+('Chile cascabel'),
+('Chile deshidratado tipo cascabel, presentacion de 1kg'),
+('230'),
+('7'),
+(select clv_categoria from Categoria where categoria = 'Chiles'limit 1),
+(select clv_proveedor from Proveedor where proveedor = 'Greco Garcia' limit 1));
+
+UPDATE Producto
+SET Descripcion =  'Chile deshidratado tipo guajilllo, presentacion de 1kg'
+WHERE Clv_producto = '1927';
+
+Insert Producto values(
+('4575'),
+('Garbanzo'),
+('Garbanzos a granel secos y sin cocinar.Empaque de 1 kg'),
+('45'),
+('12'),
+(select clv_categoria from categoria where categoria = 'Semillas' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Ryan Monroy' limit 1));
+
+Insert Producto values(
+('9717'),
+('Frijol'),
+('Frijol a granel, listo para ser cocinado. Empaque de 1kg'),
+('34'),
+('13'),
+(select clv_categoria from Categoria where categoria= 'Semillas' limit 1),
+(select clv_proveedor from Proveedor where proveedor ='Jennifer Almaraz' limit 1));
+
+Insert Producto values(
+('7612'),
+('Maiz pozolero'),
+('Maiz pozolero a granel, grano grande y firme. Empaque de 1kg'),
+('28'),
+('14'),
+(select clv_categoria from categoria where categoria = 'Semillas' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Ryan Monroy' limit 1));
+
+Insert Producto values(
+('6812'),
+('Linaza'),
+('Semilla linaza a granel. Empaque de 100g'),
+('5'),
+('5000'),
+(select clv_categoria from categoria where categoria = 'Semillas' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Jennifer Almaraz' limit 1));
+
+Insert Producto values(
+('1209'),
+('Crema lala'),
+('Crema marca lala con presentacion de 1/2 litro'),
+('35'),
+('10'),
+(select clv_categoria from categoria where categoria = 'lacteos' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Mariana Cruz' limit 1));
+
+Insert Producto values(
+('1452'),
+('Mantequila Iberia'),
+('Mantequilla marca Iberia con presentacion en barra de 90gr'),
+('35'),
+('20'),
+(select clv_categoria from categoria where categoria = 'lacteos' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Mariana Cruz' limit 1));
+
+
+Insert Producto values(
+('9813'),
+('Queso manchego'),
+('Queso manchego marca noche buena, porcion minima a la venta: 1/4'),
+('45'),
+('10'),
+(select clv_categoria from categoria where categoria = 'lacteos' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Ryan Monroy' limit 1));
+
+Insert Producto values(
+('2301'),
+('Leche alpura'),
+('Leche de vaca marca Alpura, en presentacion de 1lt'),
+('25'),
+('8'),
+(select clv_categoria from categoria where categoria = 'lacteos' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Bibiana Castillo' limit 1));
+
+Insert Producto values(
+('2482'),
+('Yogurt de frutas'),
+('Yogurt de frutas marca alpura con presentacion de 125gr '),
+('10'),
+('15'),
+(select clv_categoria from categoria where categoria = 'lacteos' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Bibiana Castillo' limit 1));
+
+
+
+Insert Producto values(
+('9729'),
+('Gomitas de manzana'),
+('Gomitas azucaradas a granel sabor manzana, 100gr '),
+('14'),
+('1000'),
+(select clv_categoria from categoria where categoria = 'Dulces' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Lariza Garcia' limit 1));
+
+Insert Producto values(
+('8357'),
+('Jamon de pavo'),
+('Jamon kir de pavo, 1kg '),
+('85'),
+('4'),
+(select clv_categoria from categoria where categoria = 'Carnes frias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Bibiana Castillo' limit 1));
+
+
+Insert Producto values(
+('8642'),
+('Longaniza'),
+('Longaniza casera, 1kg '),
+('120'),
+('7'),
+(select clv_categoria from categoria where categoria = 'Carnes frias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Olivia Castillo' limit 1));
+
+Insert Producto values(
+('8422'),
+('Chuleta aumada'),
+('Chuleta aumada marca DyN, 1kg '),
+('130'),
+('5'),
+(select clv_categoria from categoria where categoria = 'Carnes frias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Olivia Castillo' limit 1));
+
+
+Insert Producto values(
+('8097'),
+('Jamon'),
+('Jamon de pavo marca Aroos, 1kg'),
+('110'),
+('6'),
+(select clv_categoria from categoria where categoria = 'Carnes frias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Olivia Castillo' limit 1));
+
+Insert Producto values(
+('8763'),
+('Pierna'),
+('Pierna de cerdo, 1/4kg'),
+('32'),
+('6'),
+(select clv_categoria from categoria where categoria = 'Carnes frias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Olivia Castillo' limit 1));
+
+Insert Producto values(
+('8637'),
+('Salchicha'),
+('Salchicha marca Sant.1kg'),
+('55'),
+('8'),
+(select clv_categoria from categoria where categoria = 'Carnes frias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Olivia Castillo' limit 1));
+
+Insert Producto values(
+('9748'),
+('Ajonjoli'),
+('Ajonjoli. 1kg'),
+('80'),
+('5'),
+(select clv_categoria from categoria where categoria = 'Especias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Gustavo Garcia' limit 1));
+
+Insert Producto values(
+('5468'),
+('Achiote'),
+('Achiote. 100g'),
+('7'),
+('1000'),
+(select clv_categoria from categoria where categoria = 'Especias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Gustavo Garcia' limit 1));
+
+Insert Producto values(
+('5985'),
+('Oregano'),
+('Oregano. 100g'),
+('10'),
+('2000'),
+(select clv_categoria from categoria where categoria = 'Especias' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Gustavo Garcia' limit 1));
+
+UPDATE Producto
+SET Clv_categoria = '723456' 
+WHERE Nombre = 'Salchicha';
+
+Insert Producto values(
+('9854'),
+('Huevitos'),
+('Huevitos sabor chocolate. 100g'),
+('12'),
+('2000'),
+(select clv_categoria from categoria where categoria = 'Dulces' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Lariza Garcia' limit 1));
+
+
+Insert Producto values(
+('9654'),
+('Frescas'),
+('Esferas rellenas de dulce cubiertas de chocolate. 100g'),
+('18'),
+('1000'),
+(select clv_categoria from categoria where categoria = 'Dulces' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Lariza Garcia' limit 1));
+
+Insert Producto values(
+('9434'),
+('Gomitas'),
+('Gomitas sabor cereza. 100g'),
+('10'),
+('1000'),
+(select clv_categoria from categoria where categoria = 'Dulces' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Lariza Garcia' limit 1));
+
+
+Insert Producto values(
+('9864'),
+('Cacahuates'),
+('Cacahuates enchilados. 100g'),
+('10'),
+('1000'),
+(select clv_categoria from categoria where categoria = 'Dulces' limit 1),
+(select clv_proveedor from proveedor where proveedor = 'Lariza Garcia' limit 1));
+
+UPDATE producto
+SET Clv_proveedor = '3'
+WHERE Clv_proveedor IS NULL;
+******************************************************************************************************************
+DetalleCompra
+
++-----------------+---------------+------+-----+---------+-------+
+| Field           | Type          | Null | Key | Default | Extra |
++-----------------+---------------+------+-----+---------+-------+
+| ID_Detalle      | mediumint(20) | NO   | PRI | NULL    |       |
+| Cantidad        | double        | NO   |     | NULL    |       |
+| Precio_unitario | double        | NO   |     | NULL    |       |
+| ID_compra       | mediumint(20) | NO   | MUL | NULL    |       |
+| Clv_producto    | varchar(50)   | NO   | MUL | NULL    |       |
++-----------------+---------------+------+-----+---------+-------+
+
+
+insert detallecompra values(
+1,
+5,
+(13.00),
+(select producto.clv_producto from producto where producto.nombre='Pasitas' limit 1),
+('20230506072410J208'));
+
+update Producto set producto.existencias=producto.existencias+5 where producto.nombre='Pasitas';
+update Producto set producto.precio=13*1.35 where producto.nombre='Pasitas';
+update compra set compra.total=compra.total+(5*13.00) where compra.id_compra='1015';
+
+select producto.nombre,marca.nombre,familia.nombre,presentacion.tipo from producto,marca,familia,presentacion where producto.id_marca=marca.id_marca and producto.id_familia=familia.id_familia and producto.id_presentacion=presentacion.id_presentacion and marca.nombre='Tia Rosa' and presentacion.tipo:'Bolsita';
+select producto.nombre,marca.nombre,familia.nombre,presentacion.tipo from producto,marca,familia,presentacion where producto.id_marca=marca.id_marca or producto.id_familia=familia.id_familia or producto.id_presentacion=presentacion.id_presentacion;
+--------------------------------------------------
+
+
+insert detallecompra values(
+default,
+('6'),
+('20'),
+(select compra.id_compra from compra where compra.folio_ticket='20230506072410J208' limit 1),
+(select producto.clv_producto from producto where producto.nombre='Leche alpura' limit 1));
+
+
+mysql> describe compra;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| ID_compra     | mediumint(20) | NO   | PRI | NULL    |       |
+| Folio_Ticket  | varchar(20)   | NO   |     | NULL    |       |
+| Fecha_Hora    | datetime      | NO   |     | NULL    |       |
+| total         | double        | NO   |     | NULL    |       |
+| Clv_proveedor | varchar(50)   | NO   | MUL | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+
+insert compra values(
+default,
+('20230506072410J208'),
+now(),
+(0.00),
+(select proveedor.clv_proveedor from proveedor where proveedor.proveedor ='Bibiana Castillo' limit 1));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
